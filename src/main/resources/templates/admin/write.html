@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>后台首页</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/he-css/he.css">
+    <link rel="stylesheet" href="/static/editormd/css/editormd.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> </head>
+<body>
+<header>
+    <ul class="layui-nav">
+        <li class="layui-nav-item">
+            <a href="/admin">博客列表</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/admin/type">博客类型</a>
+        </li>
+        <li class="layui-nav-item layui-this">
+            <a href="/admin/write">写博客</a>
+        </li>
+        <li id="user" class="layui-nav-item" lay-unselect="" th:if="${session.user!=null}">
+            <a href="/user"><img src="/static/img/index.jpg" th:src="@{${session.user.avatar}}" class="layui-nav-img" th:text="${session.user.usename}"></a>
+            <dl class="layui-nav-child">
+                <dd><a href="/logout">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</header>
+    <!--中间内容部分-->
+    <div class="layui-container" style="margin-bottom: 5%">
+            <div class="layui-row">
+                <div class="layui-col-md12 margin-right  margin-top">
+                    <div class="layui-card">
+                        <div class="layui-card-header" style="font-size: 18px;color: #c6c6c6;">记录博客</div>
+                        <div class="layui-card-body">
+                            <form class="layui-form  layui-form-pane" action="">
+                                <div class="layui-form-item">
+                                    <div style="display: inline-block;">
+                                        <label class="layui-form-label pane">博客标题</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div style="display: inline-block;">
+                                        <label class="layui-form-label">博客类型</label>
+                                        <div class="layui-input-inline">
+                                            <select id="blog-type" name="typeId" lay-verify="required">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="display: inline-block;">
+                                         <div class="layui-input-inline" style="width: 350px;">
+                                            <input type="checkbox" name="original" title="原创" checked>
+                                            <input type="checkbox" name="appreciate" title="允许评论" checked>
+                                            <input type="checkbox" name="commentable" title="允许赞赏"  checked>
+                                         </div>
+                                    </div>
+                                    <div style="display: inline-block;">
+                                        <div class="layui-input-inline" style="width: 80px;">
+                                            <button type="button" class="layui-btn" id="test1">
+                                                <i class="layui-icon">&#xe67c;</i>上传封面
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="md-content">
+                                    <textarea style="display: none" id="content" name="content">开始动笔把</textarea>
+                                </div>
+
+                                <div class="layui-form-item layui-form-text">
+                                    <div class="layui-input-block">
+                                        <textarea placeholder="博客大纲" lay-filter="require" name="outline" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block" style="float: right;">
+                                        <button class="layui-btn" lay-submit lay-filter="formDemo">写完收工</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script src="/static/js/jquery-1.8.3.js"></script>
+<script src="/static/editormd/editormd.js"></script>
+<script src="/static/layui/layui.js"></script>
+<script src="/static/he-js/admin/write.js"></script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+    $(function () {
+        var testEditor;
+        testEditor = editormd("md-content", {
+            placeholder:'本编辑器支持Markdown编辑，左边编写，右边预览',  //默认显示的文字，这里就不解释了
+            width: "100%",
+            height: 600,
+            syncScrolling: "single",
+            path: "/static/editormd/lib/",   //你的path路径（原资源文件中lib包在我们项目中所放的位置）
+            theme: "dark",//工具栏主题
+            previewTheme: "dark",//预览主题
+            editorTheme: "pastel-on-dark",//编辑主题
+            saveHTMLToTextarea: true,
+            emoji: false,
+            taskList: true,
+            tocm: true,         // Using [TOCM]
+            tex: true,                   // 开启科学公式TeX语言支持，默认关闭
+            flowChart: true,             // 开启流程图支持，默认关闭
+            sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
+            toolbarIcons : function() {  //自定义工具栏，后面有详细介绍
+                return editormd.toolbarModes['full']; // full, simple, mini
+            },
+        });
+    })
+</script>
+

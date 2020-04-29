@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆注册中心</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/he-css/he.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> </head>
+<body>
+<header>
+    <ul class="layui-nav">
+        <li class="layui-nav-item">
+            <a href="/">博客</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/about">关于我</a>
+        </li>
+        <li class="layui-nav-item layui-this" th:if="${session.user==null}">
+            <a href="/login">登陆</a>
+        </li>
+        <li id="user" class="layui-nav-item" lay-unselect="" th:if="${session.user!=null}">
+            <a href="user"><img src="/static/img/index.jpg" th:src="@{${session.user.avatar}}" class="layui-nav-img" th:text="${session.user.usename}"></a>
+            <dl class="layui-nav-child">
+                <dd><a href="/logout">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</header>
+
+<!--中间内容部分-->
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md12 margin-right  margin-top">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <span class="layui-breadcrumb" lay-separator="|">
+                      <a href="javascript:;" id="login-pane" class="he-choose">登陆</a>
+                      <a href="javascript:;" id="register-pane">注册</a>
+                    </span>
+                </div>
+                <div class="layui-card-body">
+                    <form class="layui-form" action="" id="login-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">账号:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="email"  lay-verify="email" lay-reqtext="账号是必填项，岂能为空？" autocomplete="off" placeholder="请输入账号" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">密码:</label>
+                            <div class="layui-input-inline">
+                                <input type="password" name="pass" lay-verify="password" lay-reqtext="密码是必填项，岂能为空？" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">验证:</label>
+                            <div class="layui-input-inline">
+                                <div id="qrcode"></div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" id="login" lay-submit lay-filter="formDemo">立即登陆</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form class="layui-form" action="" id="register-form" style="display: none;">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">邮箱:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="email" name="email"  lay-verify="email"  lay-reqtext="邮箱是必填项，岂能为空？" autocomplete="off" placeholder="请输入qq邮箱" class="layui-input">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">请填写qq邮箱</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">密码:</label>
+                            <div class="layui-input-inline">
+                                <input type="password" name="pass" lay-verify="password" lay-reqtext="密码是必填项，岂能为空？" placeholder="请输入自定义密码" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">密码自定义可以为数字和字母,在6到12位</div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">验证:</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="code" name="code" lay-verify="require" lay-reqtext="验证码是必填项，岂能为空？" placeholder="请输入邮箱验证码" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-word-aux"><button type="button" id="send_email" class="layui-btn">发送验证码</button></div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" id="register" lay-submit lay-filter="formDemo1">立即注册</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="/static/layui/layui.js"></script>
+<script src="/static/js/jigsaw.min.js"></script>
+<script src="/static/he-js/login.js"></script>
+
+

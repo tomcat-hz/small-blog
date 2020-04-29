@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>关于我</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/he-css/he.css">
+    <link rel="stylesheet" href="/static/sky/css/index_style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> </head>
+<body>
+<!--星空特效-->
+<div id="demo" style="position: absolute;z-index: -1">
+    <canvas id="canvas"></canvas>
+</div>
+
+<header>
+    <ul class="layui-nav">
+        <li class="layui-nav-item">
+            <a href="/">博客</a>
+        </li>
+        <li class="layui-nav-item layui-this">
+            <a href="/about">关于我</a>
+        </li>
+        <li class="layui-nav-item" th:if="${session.user==null}">
+            <a href="/login">登陆</a>
+        </li>
+        <li id="user" class="layui-nav-item" lay-unselect="" th:if="${session.user!=null}">
+            <a href="/user"><img th:src="@{${session.user.avatar}}" class="layui-nav-img" th:text="${session.user.usename}"></a>
+            <dl class="layui-nav-child">
+                <dd><a href="/logout">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</header>
+
+<!--中间内容部分-->
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md8 margin-right  margin-top">
+            <div class="layui-card">
+                <div class="layui-card-header" style="font-size: 20px" align="center">美丽风景</div>
+                <div class="layui-card-body">
+                    <img src="/static/img/index.jpg"  class="about-img">
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3 margin-top">
+            <div class="layui-card">
+                <div class="layui-card-header">关于我</div>
+                <div class="layui-card-body">
+                    <span>个人技能:</span>
+                    <span class="layui-badge layui-bg-black">java</span>
+                    <span class="layui-badge layui-bg-black">html</span>
+                    <span class="layui-badge layui-bg-black">js</span>
+                    <span class="layui-badge layui-bg-black">css</span>
+                    <span class="layui-badge layui-bg-black">jquery</span>
+                    <span class="layui-badge layui-bg-black">vue</span>
+                    <span class="layui-badge layui-bg-black">ssm</span>
+                    <span class="layui-badge layui-bg-black">spring boot</span>
+                    <span class="layui-badge layui-bg-black">spring cloud</span>
+                    <span class="layui-badge layui-bg-black">layui</span>
+                    <span class="layui-badge layui-bg-black">bootstrap</span>
+                    <span class="layui-badge layui-bg-black">linux</span>
+                    <hr class="layui-bg-black">
+                    <div>联系方式:</div>
+                    <div>
+                        &nbsp;&nbsp;&nbsp;QQ:&nbsp;&nbsp;&nbsp;2218359849
+                    </div>
+                    <div>
+                        email:&nbsp;&nbsp;&nbsp;2218359849@qq.com
+                    </div>
+                    <div align="center" style="float: left;width: 50px;">微<br>信</div>
+                    <div>
+                        <img src="/static/img/wx.png" width="70px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script src="/static/layui/layui.js"></script>
+<script src="/static/he-js/about.js"></script>
+<script src="/static/sky/js/sky.js"></script>
+

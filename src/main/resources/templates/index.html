@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>博客</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/he-css/he.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+<header>
+    <ul class="layui-nav">
+        <li class="layui-nav-item layui-this">
+            <a href="/">博客</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/about">关于我</a>
+        </li>
+        <li class="layui-nav-item"  th:if="${session.user==null}">
+            <a href="/login">登陆</a>
+        </li>
+        <li id="user" class="layui-nav-item" lay-unselect="" th:if="${session.user!=null}">
+            <a href="user"><img src="/static/img/index.jpg" th:src="@{${session.user.avatar}}" class="layui-nav-img" th:text="${session.user.usename}"></a>
+            <dl class="layui-nav-child">
+                <dd><a href="/logout">退了</a></dd>
+            </dl>
+        </li>
+        <input style="display:inline-block;position:relative;top: 5px;width: 200px;margin-right: 10px;margin-left: 20px" type="text" id=title placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+        <button class="layui-btn" lay-submit lay-filter="formDemo" id="search">搜索</button>
+    </ul>
+</header>
+    <!--中间内容部分-->
+    <div class="layui-container" style="margin-bottom: 140px">
+            <div class="layui-row">
+                <div class="layui-col-md8 margin-right  margin-top">
+                    <div class="layui-card">
+                        <div class="layui-card-header" style="font-size: 18px;color: #c6c6c6;">博客<span style="float:right;color: #000;">共<span id="total" style="color: red"></span>篇</span></div>
+                        <div class="layui-card-body">
+                            <div id="blog-body">
+                                <div>
+                                    <div class="layui-row">
+                                        <div class="title layui-col-md-offset4">
+                                            标题
+                                        </div>
+                                        <span style="position: relative;left: 30px;">
+                                       <svg style="position:relative;top:10px" t="1587998272601" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2342" width="32" height="32"><path d="M235.917 211.277c5.713-44.526 24.021-65.644 56.182-66.78 35.213-1.244 53.427 17.936 62.051 66.43 105.131 0 210.509 0 310.598 0 12.010-20.489 20.229-40.598 34.014-55.589 7.452-8.103 24.422-10.252 37.080-10.21 30.646 0.106 46.939 20.774 54.254 67.167 8.945 0 18.487-0.125 28.018 0.021 40.806 0.627 62.91 21.976 63.1 62.848 0.428 93.011 0.152 186.026 0.157 279.043 0 85.968 0.116 171.935-0.050 257.904-0.095 49.574-19.708 69.097-69.080 69.104-198.71 0.050-397.422 0.050-596.137 0.006-52.131-0.012-71.632-19.349-71.641-71.001-0.041-175.458-0.029-350.917-0.007-526.377 0.007-51.445 19.667-71.044 71.52-71.597 6.224-0.066 12.439-0.592 19.941-0.969zM189.238 415.419c0 10.534 0 17.493 0 24.452 0 122.569-0.021 245.135 0.018 367.704 0.007 27.424 0.801 28.204 28.675 28.204 196.551 0.034 393.106 0.034 589.66 0.007 28.56-0.007 29.679-1.028 29.695-29.746 0.075-121.867-0.471-243.742 0.513-365.602 0.169-21.006-6.617-25.509-26.4-25.441-198.665 0.69-397.334 0.419-596.004 0.419-7.592 0-15.191 0-26.156 0zM694.889 252.145c0.095 0 0.19 0.003 0.29 0.003 0 17.551-1.207 35.207 0.306 52.627 1.85 21.27 16.825 34.548 35.684 34.418 19.658-0.134 34.629-14.858 35.187-37.067 0.822-32.992 0.752-66.026 0.075-99.023-0.456-22.028-15.051-36.723-35.010-37.449-19.234-0.7-34.99 14.133-36.324 35.94-1.033 16.792-0.207 33.697-0.207 50.552zM258.777 250.306c0.098 0 0.189 0 0.289 0 0 18.263-1.164 36.619 0.306 54.763 1.668 20.651 17.478 34.427 36.089 34.135 19.057-0.3 34.156-14.055 34.833-35.207 1.106-34.389 1.099-68.865-0.024-103.252-0.682-20.739-16.298-34.839-35.119-35.139-19.399-0.308-35.064 14.755-36.201 36.232-0.858 16.115-0.173 32.31-0.173 48.47zM276.429 761.875c0-17.294 0-32.603 0-49.376 34.288 0 67.742 0 102.769 0 0 15.657 0 31.497 0 49.376-33.308 0-67.225 0-102.769 0zM462.713 762.371c0-17.079 0-32.935 0-50.063 34.346 0 67.618 0 102.037 0 0 17.017 0 32.782 0 50.063-34.537 0-67.866 0-102.037 0zM647.943 762.462c0-18.533 0-33.718 0-50.153 33.292 0 65.357 0 99.15 0 0 16.129 0 32.483 0 50.153-32.744 0-65.416 0-99.15 0zM379.855 501.193c0 16.411 0 31.538 0 48.112-34.18 0-67.503 0-102.566 0 0-15.524 0-31.139 0-48.112 33.486 0 66.848 0 102.566 0zM462.836 549.112c0-16.896 0-31.989 0-48.046 34.395 0 67.593 0 101.955 0 0 16.256 0 31.325 0 48.046-33.883 0-67.035 0-101.955 0zM276.759 654.885c0-16.249 0-31.318 0-47.524 34.582 0 67.965 0 102.674 0 0 15.745 0 30.825 0 47.524-33.518 0-66.894 0-102.674 0zM463.017 607.182c34.598 0 67.312 0 101.476 0 0 15.975 0 31.006 0 47.685-33.68 0-66.877 0-101.476 0 0-15.545 0-30.623 0-47.685zM747.373 549.432c-33.173 0-65.602 0-99.361 0 0-16.376 0-31.455 0-48.053 32.908 0 65.412 0 99.361 0 0 15.621 0 31.214 0 48.053zM748.010 607.916c0 16.278 0 30.854 0 46.99-33.235 0-65.701 0-99.757 0 0-15.621 0-30.657 0-46.99 33.461 0 66.493 0 99.757 0z" p-id="2343"></path></svg>
+                                        <span title="博客修改或发布日期">2020年</span>
+                                    </span>
+                                        <div class="layui-col-md8 margin-top">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span>
+                                            卡片式
+                                        </span>
+                                        </div>
+                                        <div class="layui-col-md4 margin-top padding-left padding-right">
+                                            <img src="/static/img/index.jpg" class="index-img"/>
+                                        </div>
+                                    </div>
+                                    <hr class="layui-bg-black">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="page" style="display: flex;justify-content: flex-end;margin-right: 30px"></div>
+                    </div>
+                </div>
+                <div class="layui-col-md3 margin-top">
+                    <div class="layui-card">
+                        <div class="layui-card-header">百科</div>
+                        <div class="layui-card-body">
+                           <input type="text" id="baidu" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                            <div id="content"></div>
+                        </div>
+                </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">翻译</div>
+                        <div class="layui-card-body">
+                            <input type="text" id="translate" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                            <div id="content1"></div>
+                        </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+    <div class="layui-footer footer">
+        <div class="layui-row">
+            <div class="layui-col-md4 margin-top margin-bottom" align="center">
+                <img src="/static/img/wx.png" width="100px"/>
+            </div>
+            <div style="height: 100px;" class="layui-col-md4 margin-top margin-bottom" align="center">
+             <span style="position: relative;top: 60px;">COPYRIGHT  © 2020 个人博客, 鄂ICP备20004667号-1</span>
+            </div>
+            <div style="height: 100px" class="layui-col-md4 margin-top margin-bottom" align="center">3</div>
+        </div>
+    </div>
+<div style="display: none;" id="msg" th:text="${msg}"></div>
+</body>
+</html>
+<script src="/static/layui/layui.js"></script>
+<script src="/static/he-js/index.js"></script>

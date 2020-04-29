@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>后台首页</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/he-css/he.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> </head>
+<body>
+<header>
+    <ul class="layui-nav">
+        <li class="layui-nav-item layui-this">
+            <a href="/admin">博客列表</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/admin/type">博客类型</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/admin/write">写博客</a>
+        </li>
+        <li id="user" class="layui-nav-item" lay-unselect="" th:if="${session.user!=null}">
+            <a href="/user"><img src="/static/img/index.jpg" th:src="@{${session.user.avatar}}" class="layui-nav-img" th:text="${session.user.usename}"></a>
+            <dl class="layui-nav-child">
+                <dd><a href="/logout">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</header>
+    <!--中间内容部分-->
+    <div class="layui-container">
+            <div class="layui-row">
+                <div class="layui-col-md12 margin-right  margin-top">
+                    <div class="layui-card">
+                        <div class="layui-card-header" style="font-size: 18px;color: #c6c6c6;">博客列表<span style="float:right;color: #000;">共<span style="color: red">15</span>篇</span></div>
+                        <div class="layui-card-body">
+                            <form class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <div style="display: inline-block">
+                                        <label class="layui-form-label">博客标题</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="title" required placeholder="标题关键字" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div style="display: inline-block">
+                                        <label class="layui-form-label">博客类型</label>
+                                        <div class="layui-input-inline">
+                                            <select id="blog-type" name="typeId">
+                                                <option value=""></option>
+                                                <option value="0">北京</option>
+                                                <option value="1">上海</option>
+                                                <option value="2">广州</option>
+                                                <option value="3">深圳</option>
+                                                <option value="4">杭州</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="display: inline-block">
+                                        <label class="layui-form-label">原创</label>
+                                        <div class="layui-input-inline">
+                                            <input type="radio" name="original" value="1" title="是">
+                                            <input type="radio" name="original" value="0" title="否">
+                                        </div>
+                                    </div>
+                                    <div style="display: inline-block">
+                                        <div class="layui-input-inline">
+                                            <button class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <table class="layui-hide" id="demo" lay-filter="test"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script src="/static/layui/layui.js"></script>
+<script src="/static/he-js/admin/index.js"></script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>

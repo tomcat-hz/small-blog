@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>后台首页</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/he-css/he.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> </head>
+<body>
+<header>
+    <ul class="layui-nav">
+        <li class="layui-nav-item">
+            <a href="/admin">博客列表</a>
+        </li>
+        <li class="layui-nav-item layui-this">
+            <a href="/admin/type">博客类型</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/admin/write">写博客</a>
+        </li>
+        <li id="user" class="layui-nav-item" lay-unselect="" th:if="${session.user!=null}">
+            <a href="/user"><img src="/static/img/index.jpg" th:src="@{${session.user.avatar}}" class="layui-nav-img" th:text="${session.user.usename}"></a>
+            <dl class="layui-nav-child">
+                <dd><a href="/logout">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</header>
+    <!--中间内容部分-->
+    <div class="layui-container">
+            <div class="layui-row">
+                <div class="layui-col-md12 margin-right  margin-top">
+                    <div class="layui-card">
+                        <div class="layui-card-header" style="font-size: 18px;color: #c6c6c6;">博客类型列表<span style="float:right;color: #000;">共<span style="color: red" id="total"></span>类</span></div>
+                        <div class="layui-card-body">
+                            <form class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="typeName" required  lay-verify="required" placeholder="请输入博客类型名称" autocomplete="off" class="layui-input">
+                                    </div>
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn" lay-submit lay-filter="formDemo">添加</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <table class="layui-hide" id="demo" lay-filter="test"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script src="/static/layui/layui.js"></script>
+<script src="/static/he-js/admin/type.js"></script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>

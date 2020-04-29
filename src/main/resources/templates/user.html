@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>博客</title>
+    <link rel="stylesheet" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/he-css/he.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> </head>
+<body>
+<header>
+    <ul class="layui-nav">
+        <li class="layui-nav-item">
+            <a href="/">博客</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/about">关于我</a>
+        </li>
+        <li class="layui-nav-item"  th:if="${session.user==null}">
+            <a href="/login">登陆</a>
+        </li>
+        <li id="user" class="layui-nav-item layui-this" lay-unselect="" th:if="${session.user!=null}">
+            <a href="/user"><img src="/static/img/index.jpg" th:src="@{${session.user.avatar}}" class="layui-nav-img" th:text="${session.user.usename}"></a>
+            <dl class="layui-nav-child">
+                <dd><a href="/logout">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</header>
+    <!--中间内容部分-->
+    <div class="layui-container">
+            <div class="layui-row">
+                <div class="layui-col-md12 margin-right  margin-top">
+                    <div class="layui-card">
+                        <div class="layui-card-header"></div>
+                        <div class="layui-card-body">
+                            <table class="layui-table" lay-filter="userTable">
+                                <thead>
+                                <tr>
+                                    <th>昵称</th>
+                                    <th>加入时间</th>
+                                    <th>头像</th>
+                                    <th>年龄</th>
+                                    <th>home</th>
+                                    <th>职业</th>
+                                    <th>等级</th>
+                                    <th>用户类型</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td th:text="${session.user.usename}"></td>
+                                    <td th:text="${#dates.format(session.user.createTime,'yyyy年MM月dd日 HH:mm:ss')}"></td>
+                                    <td><img th:src="@{${session.user.avatar}}"></td>
+                                    <td th:text="${session.user.age}"></td>
+                                    <td th:text="${session.user.address}"></td>
+                                    <td th:text="${session.user.job}"></td>
+                                    <td th:text="${session.user.level}"></td>
+                                    <td th:if="${session.user.userType==0}">管理员</td>
+                                    <td th:if="${session.user.userType==1}">用户</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <span class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+                                <button data-method="notice" class="layui-btn">修改个人信息</button>
+                            </span>
+                            <span>
+                                <a href="/admin">
+                                    <button data-method="notice" class="layui-btn" th:if="${session.user.userType==0}">控制台</button>
+                                </a>
+                            </span>
+                        </div>
+                        </div>
+                    </div>
+            </div>
+    </div>
+
+    <form class="layui-form primary-form" action=""  id="userForm">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: -10px;">
+            <legend>个人信息修改</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input th:value="${session.user.id}" type="hidden" name="id" required  placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">昵称</label>
+            <div class="layui-input-inline">
+                <input th:value="${session.user.usename}" type="text" name="usename" required lay-verify="username" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">头像</label>
+            <div class="layui-input-inline">
+                <input th:value="${session.user.avatar}" type="text" name="avatar" required lay-verify="avatar" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">年龄</label>
+            <div class="layui-input-inline">
+                <input type="text" th:value="${session.user.age}" name="age" required lay-verify="age" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">home</label>
+            <div class="layui-input-inline">
+                <input type="text" th:value="${session.user.address}" name="address" required lay-verify="address" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">职业</label>
+            <div class="layui-input-inline">
+                <input th:value="${session.user.job}" type="text" name="job" required lay-verify="job" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">确认</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="/static/layui/layui.js"></script>
+<script src="/static/he-js/user.js"></script>
