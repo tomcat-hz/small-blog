@@ -14,13 +14,13 @@ import java.util.UUID;
 public class QiNiuUtils {
 
     //设置好账号的ACCESS_KEY和SECRET_KEY;这两个登录七牛账号里面可以找到
-    static String ACCESS_KEY = "XakQh0WrBh7uDrey1GQs4k2kbrkMsoAVFs0XeWGj";
-    static String SECRET_KEY = "MTWqtnOsWypywANERht50DCzpyUvglBUDSyR7mFq";
+    static String ACCESS_KEY = "";
+    static String SECRET_KEY = "";
     //要上传的空间;对应到七牛云上（自己建文件夹 注意设置公开）
-    static String bucketname = "blog-he";
+    static String bucketname = "";
     //上传文件的路径 ;本地要上传文件路径
-   // static String FilePath = "E:\\djin\\img\\fm5.jpg";
-    static final String yupath = "q9hljz6bo.bkt.clouddn.com";
+   // static String FilePath = "";
+    static final String yupath = "";
     //密钥配置
     static Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
     //创建上传zone2表示华南zone0表示华东
