@@ -1,10 +1,10 @@
 # layui-blog
 ### 安装步骤
-1.运行he-sql文件
-2.import项目到idea中,导入maven依赖
-3.修改yml中的邮箱配置
-4.修改mysql数据库的用户密码配置
-5.修改utils下千牛云的配置不然上传不了图片
+1. 运行he-sql文件
+2. import项目到idea中,导入maven依赖
+3. 修改yml中的邮箱配置
+4. 修改mysql数据库的用户密码配置
+5. 修改utils下千牛云的配置不然上传不了图片
 static String ACCESS_KEY = "";
 static String SECRET_KEY = "";
 //要上传的空间;对应到七牛云上（自己建文件夹 注意设置公开）
